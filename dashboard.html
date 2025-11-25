@@ -17,14 +17,16 @@
 
         /* ====== TOP BAR ====== */
         .topbar {
-            width: 100%;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 0 15px rgba(0,255,240,0.2);
+    width: 100%;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 0 15px rgba(0,255,240,0.2);
+    position: relative;
+    z-index: 999; /* FIX → topbar selalu di atas drawer */
         }
 
         .menu-btn {
@@ -47,18 +49,20 @@
 
         /* ====== NAVIGATION DRAWER ====== */
         .drawer {
-            position: fixed;
-            top: 0;
-            left: -260px;
-            height: 100%;
-            width: 260px;
-            background: rgba(255,255,255,0.08);
-            backdrop-filter: blur(14px);
-            box-shadow: 0 0 30px rgba(255,93,224,0.3);
-            padding: 30px 20px;
-            transition: 0.4s;
-            z-index: 99;
-        }
+    position: fixed;
+    top: 0;
+    left: -260px;
+    height: 100%;
+    width: 260px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 0 30px rgba(255,93,224,0.3);
+    padding: 30px 20px;
+    transition: left 0.4s ease; /* FIX transition agar smooth */
+    z-index: 998; /* Dibawah topbar */
+    overflow: hidden; /* FIX → Blur tidak bocor ke layar */
+            }
+        
 
         .drawer.open {
             left: 0;
