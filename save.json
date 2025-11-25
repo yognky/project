@@ -1,0 +1,14 @@
+{
+  "users": [
+    {
+      "username": "yongky",
+      "password": "12345",
+      "expired": "2035-12-31"
+    },
+    {
+      "username": "arsha",
+      "password": "9999",
+      "expired": "2035-11-30"
+    }
+  ]
+}
