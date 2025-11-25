@@ -9,7 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
-        /* COLOR PALETTE */
         :root {
             --aqua: #00fff0;
             --violet: #b300ff;
@@ -22,14 +21,15 @@
             background: var(--dark-bg);
             font-family: 'Poppins', sans-serif;
             color: white;
+            overflow-x: hidden;
         }
 
-        /* Glow Animation */
+        /* Glow Title */
         @keyframes neonGlow {
-            0% { text-shadow: 0 0 6px var(--aqua); color: var(--aqua); }
-            33% { text-shadow: 0 0 6px var(--violet); color: var(--violet); }
-            66% { text-shadow: 0 0 6px var(--pink); color: var(--pink); }
-            100% { text-shadow: 0 0 6px var(--aqua); color: var(--aqua); }
+            0% { color: var(--aqua); text-shadow: 0 0 6px var(--aqua); }
+            33% { color: var(--violet); text-shadow: 0 0 6px var(--violet); }
+            66% { color: var(--pink); text-shadow: 0 0 6px var(--pink); }
+            100% { color: var(--aqua); text-shadow: 0 0 6px var(--aqua); }
         }
 
         /* Drawer */
@@ -41,30 +41,30 @@
             top: 0;
             background: rgba(10, 10, 20, 0.85);
             backdrop-filter: blur(10px);
-            box-shadow: 0 0 20px var(--violet);
             overflow-x: hidden;
             transition: 0.35s;
             padding-top: 60px;
+            box-shadow: 0 0 20px var(--violet);
+            z-index: 999;
         }
 
         .drawer a {
             padding: 14px 20px;
-            display: block;
-            text-decoration: none;
             font-size: 18px;
-            font-weight: 600;
+            text-decoration: none;
             color: white;
-            transition: 0.2s;
+            display: block;
+            transition: 0.25s;
         }
 
         .drawer a:hover {
-            background: rgba(255, 255, 255, 0.1);
-            letter-spacing: 1px;
+            background: rgba(255,255,255,0.08);
+            padding-left: 28px;
         }
 
-        .drawer .closebtn {
+        .closebtn {
             position: absolute;
-            top: 10px;
+            top: 15px;
             right: 20px;
             font-size: 40px;
             cursor: pointer;
@@ -72,59 +72,58 @@
 
         /* Menu Button */
         .menu-btn {
-            font-size: 27px;
+            font-size: 28px;
             cursor: pointer;
-            padding: 12px 18px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(8px);
+            padding: 10px 14px;
+            margin: 15px;
             border-radius: 8px;
-            width: fit-content;
+            background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 0 10px #000;
-            margin: 20px;
+            backdrop-filter: blur(5px);
+            transition: 0.2s;
+            width: fit-content;
         }
 
         .menu-btn:hover {
-            box-shadow: 0 0 10px var(--aqua);
+            box-shadow: 0 0 12px var(--aqua);
         }
 
         /* Title */
         .title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 32px;
             text-align: center;
-            margin-top: 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(22px, 5vw, 34px);
+            margin-top: 10px;
             animation: neonGlow 4s infinite linear;
         }
 
-        /* Box */
+        /* Box Container */
         .box {
-            margin: 30px;
             padding: 20px;
+            margin: 25px;
             background: rgba(255,255,255,0.05);
             border-radius: 12px;
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            backdrop-filter: blur(15px);
             box-shadow: 0 0 15px rgba(0,255,240,0.2);
         }
 
         /* Button */
         .btn {
-            padding: 12px 18px;
-            font-size: 17px;
-            font-weight: 600;
+            padding: 12px 20px;
             background: linear-gradient(90deg, var(--aqua), var(--violet), var(--pink));
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             color: white;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            width: fit-content;
+            box-shadow: 0 0 15px var(--violet);
+            animation: glowPulse 2s infinite ease-in-out;
             margin-top: 10px;
-            box-shadow: 0 0 12px var(--violet);
-            animation: pulse 2.2s infinite ease-in-out;
         }
 
-        @keyframes pulse {
+        @keyframes glowPulse {
             0% { box-shadow: 0 0 10px var(--aqua); }
             50% { box-shadow: 0 0 20px var(--violet); }
             100% { box-shadow: 0 0 10px var(--pink); }
@@ -134,8 +133,11 @@
             transform: scale(1.05);
         }
 
-        #main {
-            transition: margin-left 0.3s;
+        /* Responsive Fix */
+        @media(max-width: 480px) {
+            .drawer a { font-size: 16px; padding: 12px; }
+            .menu-btn { font-size: 24px; }
+            .box { margin: 15px; padding: 15px; }
         }
     </style>
 </head>
@@ -144,30 +146,29 @@
     <!-- Drawer -->
     <div id="drawer" class="drawer">
         <span class="closebtn" onclick="closeDrawer()">×</span>
-        <a href="#">Dashboard</a>
+        <a href="dashboard.html">Dashboard</a>
         <a href="fitur.html">Fitur</a>
         <a href="#">Pengaturan</a>
-        <a href="#" style="color: #ff3c78;">Logout</a>
+        <a href="index.html" style="color:#ff3c78;">Logout</a>
     </div>
 
     <!-- Main -->
     <div id="main">
-        <span class="menu-btn" onclick="openDrawer()">☰ Menu</span>
+        <span class="menu-btn" onclick="openDrawer()">☰</span>
 
         <div class="title">CYBER VOID AURA DASHBOARD</div>
 
         <div class="box">
-            <p>Selamat datang di dashboard futuristik dengan tema neon AI yang dibuat sesuai request kamu.</p>
+            <p>Selamat datang di Dashboard Futuristik tema AI Neon.</p>
             <button class="btn" onclick="window.location.href='fitur.html'">Buka Fitur</button>
         </div>
     </div>
 
     <script>
         function openDrawer() {
-            document.getElementById("drawer").style.width = "250px";
-            document.getElementById("main").style.marginLeft = "250px";
+            document.getElementById("drawer").style.width = "260px";
+            document.getElementById("main").style.marginLeft = "260px";
         }
-
         function closeDrawer() {
             document.getElementById("drawer").style.width = "0";
             document.getElementById("main").style.marginLeft = "0";
