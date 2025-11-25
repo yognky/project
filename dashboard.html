@@ -1,241 +1,129 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-
-    <!-- ====== FONT ====== -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
-
     <style>
         body {
             margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #02010a 0%, #0e001a 100%);
-            color: white;
-            overflow-x: hidden;
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
         }
 
-        /* ====== TOP BAR ====== */
-        .topbar {
-    width: 100%;
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(10px);
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    box-shadow: 0 0 15px rgba(0,255,240,0.2);
-    position: relative;
-    z-index: 999; /* FIX → topbar selalu di atas drawer */
+        /* Navigation Drawer */
+        .drawer {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+        }
+
+        .drawer a {
+            padding: 12px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #f1f1f1;
+            display: block;
+            transition: 0.2s;
+        }
+
+        .drawer a:hover {
+            background: #575757;
+        }
+
+        .drawer .closebtn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 35px;
+        }
+
+        /* Main Content */
+        #main {
+            transition: margin-left 0.3s;
+            padding: 20px;
         }
 
         .menu-btn {
-            font-size: 28px;
+            font-size: 25px;
             cursor: pointer;
-            padding: 5px 10px;
-            border-radius: 8px;
-            transition: 0.3s;
-        }
-
-        .menu-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            background: #111;
+            color: #fff;
+            width: fit-content;
+            border-radius: 6px;
         }
 
         .title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 22px;
-            letter-spacing: 2px;
+            margin-top: 20px;
+            font-size: 28px;
+            font-weight: bold;
         }
 
-        /* ====== NAVIGATION DRAWER ====== */
-        .drawer {
-    position: fixed;
-    top: 0;
-    left: -260px;
-    height: 100%;
-    width: 260px;
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(14px);
-    box-shadow: 0 0 30px rgba(255,93,224,0.3);
-    padding: 30px 20px;
-    transition: left 0.4s ease; /* FIX transition agar smooth */
-    z-index: 998; /* Dibawah topbar */
-    overflow: hidden; /* FIX → Blur tidak bocor ke layar */
-            }
-        
-
-        .drawer.open {
-            left: 0;
+        .box {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
         }
 
-        .drawer h2 {
-            font-family: 'Orbitron';
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .menu-item {
-            padding: 12px 15px;
-            margin: 10px 0;
-            border-radius: 10px;
-            background: rgba(255,255,255,0.1);
+        .btn {
+            padding: 10px 15px;
+            font-size: 16px;
+            background: #111;
+            color: white;
+            border: none;
+            border-radius: 6px;
             cursor: pointer;
-            transition: 0.3s;
-            font-size: 15px;
+            margin-top: 10px;
         }
 
-        .menu-item:hover {
-            background: rgba(255,255,255,0.2);
-            transform: scale(1.05);
+        .btn:hover {
+            background: #333;
         }
-
-        /* ====== CONTENT ====== */
-        .content {
-            padding: 30px;
-        }
-
-        .page-title {
-            font-family: 'Orbitron';
-            text-align: center;
-            font-size: 26px;
-            margin-bottom: 30px;
-            letter-spacing: 2px;
-        }
-
-        /* ====== FEATURE GRID ====== */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            padding: 10px;
-        }
-
-        .card {
-            background: rgba(255,255,255,0.06);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-radius: 18px;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.45s;
-            box-shadow:
-                0 0 15px rgba(0,255,240,0.2),
-                0 0 15px rgba(179,0,255,0.2);
-        }
-
-        .card:hover {
-            transform: translateY(-8px) scale(1.03);
-            box-shadow:
-                0 0 25px rgba(0,255,240,0.5),
-                0 0 25px rgba(179,0,255,0.5),
-                0 0 25px rgba(255,93,224,0.5);
-        }
-
-        .card-title {
-            font-family: 'Orbitron';
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-
-        .card p {
-            font-size: 13px;
-            opacity: 0.7;
-        }
-
     </style>
-
-    <script>
-        function toggleDrawer() {
-            document.querySelector(".drawer").classList.toggle("open");
-        }
-
-        function goTo(page) {
-            window.location.href = page;
-        }
-
-        function logout() {
-            alert("Logged out!");
-            window.location.href = "index.html";
-        }
-    </script>
 </head>
-
 <body>
 
-    <!-- ====== TOP BAR ====== -->
-    <div class="topbar">
-        <div class="menu-btn" onclick="toggleDrawer()">☰</div>
-        <div class="title">Dashboard</div>
+    <!-- Drawer -->
+    <div id="drawer" class="drawer">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeDrawer()">&times;</a>
+        <a href="#">Dashboard</a>
+        <a href="fitur.html">Fitur</a>
+        <a href="#">Pengaturan</a>
+        <a href="#" style="color: #ff5252;">Logout</a>
     </div>
 
-    <!-- ====== NAVIGATION DRAWER ====== -->
-    <div class="drawer">
-        <h2>Menu</h2>
+    <!-- Main Content -->
+    <div id="main">
+        <span class="menu-btn" onclick="openDrawer()">☰ Menu</span>
+        
+        <div class="title">Selamat Datang di Dashboard</div>
 
-        <div class="menu-item" onclick="goTo('fitur.html')">⚡ Semua Fitur</div>
-        <div class="menu-item">🛠 Settings</div>
-        <div class="menu-item">📁 File Manager</div>
-        <div class="menu-item">🌐 Web Tools</div>
-        <div class="menu-item">📊 Analytics</div>
-        <div class="menu-item" onclick="logout()">🚪 Logout</div>
-    </div>
-
-    <!-- ====== CONTENT ====== -->
-    <div class="content">
-        <div class="page-title">⚡ Tools Collection</div>
-
-        <div class="grid">
-
-            <!-- === CARD 1 ===== -->
-            <div class="card" onclick="goTo('ngspammer.html')">
-                <div class="card-title">NGL Spammer</div>
-                <p>Kirim spam anonymous ke target NGL.</p>
-            </div>
-
-            <!-- === CARD 2 ===== -->
-            <div class="card" onclick="goTo('htmlgen.html')">
-                <div class="card-title">HTML Generator</div>
-                <p>Generate kode HTML otomatis.</p>
-            </div>
-
-            <!-- === CARD 3 ===== -->
-            <div class="card" onclick="goTo('cssgen.html')">
-                <div class="card-title">CSS Creator</div>
-                <p>Buat CSS otomatis dengan style neon.</p>
-            </div>
-
-            <!-- === CARD 4 ===== -->
-            <div class="card" onclick="goTo('scanner.html')">
-                <div class="card-title">Cyber Scanner</div>
-                <p>Scan keamanan dasar (fake). Tampilan keren.</p>
-            </div>
-
-            <!-- === CARD 5 ===== -->
-            <div class="card" onclick="goTo('encoder.html')">
-                <div class="card-title">Text Encoder</div>
-                <p>Encrypt / Encode text base64, HEX.</p>
-            </div>
-
-            <!-- === CARD 6 ===== -->
-            <div class="card" onclick="goTo('aiwriter.html')">
-                <div class="card-title">AI Writer</div>
-                <p>Buat tulisan otomatis (offline mode).</p>
-            </div>
-
-            <!-- === CARD 7 ===== -->
-            <div class="card" onclick="goTo('resources.html')">
-                <div class="card-title">Get HTML Resources</div>
-                <p>Kumpulan kode HTML, CSS, JS siap pakai.</p>
-            </div>
-
-            <!-- === CARD 8 ===== -->
-            <div class="card" onclick="goTo('tools.html')">
-                <div class="card-title">Utility Tools</div>
-                <p>IP Checker, Header Viewer, URL Decoder, dll.</p>
-            </div>
-
+        <div class="box">
+            <p>Ini adalah halaman dashboard utama tanpa gambar, hanya text clean dan simple.</p>
+            <button class="btn" onclick="window.location.href='fitur.html'">Pergi ke Fitur</button>
         </div>
     </div>
 
+    <script>
+        function openDrawer() {
+            document.getElementById("drawer").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+        }
+
+        function closeDrawer() {
+            document.getElementById("drawer").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+        }
+    </script>
+
 </body>
-      </html>
+</html>
